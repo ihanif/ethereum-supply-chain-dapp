@@ -8,9 +8,16 @@ contract Ownable {
     event TransferOwnership(address indexed oldOwner, address indexed newOwner);
 
     /// Assign the contract to an owner
-    constructor () internal {
+    constructor() internal {
         origOwner = msg.sender;
         emit TransferOwnership(address(0), origOwner);
+    }
+
+    // Define a function 'kill' if required
+    function kill() public {
+        if (msg.sender == origOwner) {
+            selfdestruct(origOwner);
+        }
     }
 
     /// Look up the address of the owner
